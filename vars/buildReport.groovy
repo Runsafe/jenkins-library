@@ -7,8 +7,7 @@ def call(String repository) {
 
   // Send notification
 	discordSend (
-		description: "**Build:** ${env.BUILD_NUMBER}**
-**Status:** ${currentBuild.currentResult}",
+		description: "**Build:** ${env.BUILD_NUMBER}**\n**Status:** ${currentBuild.currentResult}",
 		enableArtifactsList: true,
 		footer: '',
 		image: '',
