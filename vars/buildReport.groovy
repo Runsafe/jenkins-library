@@ -7,7 +7,6 @@ def call(String repository) {
 
   // Send notification
 	discordSend (
-		description: 'Build finished',
 		enableArtifactsList: true,
 		footer: '',
 		image: '',
@@ -16,7 +15,7 @@ def call(String repository) {
 		scmWebUrl: "https://github.com/Runsafe/${repository}/commit/%s",
 		showChangeset: true,
 		thumbnail: '',
-		title: "${env.JOB_NAME} ${env.BUILD_NUMBER}",
+		title: "${env.JOB_NAME} #${env.BUILD_NUMBER}",
 		webhookURL: env.DISCORD_WEBHOOK
 	)
 }
