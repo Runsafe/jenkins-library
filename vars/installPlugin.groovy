@@ -1,7 +1,7 @@
 #!/usr/bin/env groovy
 
 /**
- * Archive artifacts from build
+ * Install plugin to server
  */
 def call(String archive)
 {

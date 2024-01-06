@@ -3,13 +3,13 @@
 /**
  * Send notifications based on build status string
  */
-def call(String repository) {
+def call(String repository, String message) {
 
   // Send notification
 	discordSend (
 		description: "**Build:** ${env.BUILD_NUMBER}\n**Status:** ${currentBuild.currentResult}",
 		enableArtifactsList: true,
-		footer: '',
+		footer: message,
 		image: '',
 		link: env.BUILD_URL,
 		result: currentBuild.currentResult,
