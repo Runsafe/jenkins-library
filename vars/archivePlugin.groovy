@@ -14,7 +14,9 @@ def call(String targetFolder, String artifacts, String archive)
 		{
 			sh "cp -a ${it} ${targetFolder}"
 		}
+		fingerprint "${targetFolder/**}"
 		sh "tar -cvf ${archive} -C tmp ."
+		fingerprint archive
 		archiveArtifacts artifacts: archive
 		stash includes: archive, name: 'archive'
 	}
