@@ -7,7 +7,7 @@ def call(String targetFolder, String artifacts, String archive)
 {
 	dir('artifacts')
 	{
-		sh 'rm -rf tmp'
+		sh "rm -rf tmp ${archive}"
 		sh "mkdir -p tmp/${targetFolder}"
 		targetFolder="tmp/${targetFolder}"
 		artifacts.split(',').each
