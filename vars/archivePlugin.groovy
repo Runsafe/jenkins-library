@@ -14,7 +14,7 @@ def call(String targetFolder, String artifacts, String archive)
 		{
 			sh "cp -a ${it} ${targetFolder}"
 		}
-		sh "tar -cvf ${archive} -C tmp"
+		sh "tar -cvf ${archive} -C tmp ."
 		archiveArtifacts artifacts: archive
 		stash includes: archive, name: 'archive'
 	}
