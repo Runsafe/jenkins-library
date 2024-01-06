@@ -8,11 +8,8 @@ def call(String targetFolder, String artifacts, String archive)
 	dir('artifacts')
 	{
 		sh 'rm -rf tmp'
-		if (!targetFolder?.trim())
-		{
-			sh "mkdir -p tmp/$targetFolder"
-			targetFolder="tmp/$targetFolder"
-		}
+		sh "mkdir -p tmp/${targetFolder}"
+		targetFolder="tmp/${targetFolder}"
 		artifacts.split(',').each
 		{
 			sh "cp -a ${it} ${targetFolder}"
