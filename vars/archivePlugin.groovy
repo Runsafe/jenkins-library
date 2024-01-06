@@ -3,7 +3,7 @@
 /**
  * Archive artifacts from build
  */
-def call(String targetFolder, List<String> artifacts, String archive)
+def call(String targetFolder, String artifacts, String archive)
 {
 	dir('artifacts')
 	{
@@ -13,7 +13,7 @@ def call(String targetFolder, List<String> artifacts, String archive)
 			sh "mkdir -p tmp/$targetFolder"
 			targetFolder="tmp/$targetFolder"
 		}
-		artifacts.each
+		artifacts.split(',').each
 		{
 			sh "cp -a ${it} ${targetFolder}"
 		}
