@@ -12,7 +12,7 @@ def call(String targetFolder, String artifacts, String archive)
 		targetFolder="tmp/${targetFolder}"
 		artifacts.split(',').each
 		{
-			sh "cp -a ${it} ${targetFolder}"
+			sh "cp -a ../${it} ${targetFolder}"
 		}
 		fingerprint "${targetFolder}/**"
 		sh "tar -cvf ${archive} -C tmp ."
