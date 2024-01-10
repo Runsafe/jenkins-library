@@ -3,12 +3,54 @@
 /**
  * Download artefact dependenciess to the build
  */
-def call(String plugin, String dependencies, String artifacts)
+def call(String plugin, String dependencies, String artifacts, Map<String, String> mappedArtifacts = [])
 {
+	// Using manual checkout to skip when not needed
 	checkout scm
-	sh 'rm -rf plugins'
+	
+	// Download dependencies from jenkins
 	def classPath = prepareDependencies dependencies
+	
+	// Build plugin
 	sh "ant -f ant.xml ${classPath}"
+	
+	// Log java warnings
 	recordIssues enabledForFailure: true, tool: java(), unhealthy: 10
-	archivePlugin '', artifacts, "${plugin}.tar"
+
+  // Build plugin archive
+	def archive = "${plugin}.tar"
+	dir('artifacts')
+	{
+		sh "rm -rf tmp ${archive}"
+		dir('tmp')
+		{
+			// Copy artifacts into root folder
+			artifacts.split(',').each
+			{
+				sh "cp -a ../../${it} ."
+			}
+
+			// Copy artifacts into subdirectories
+			mappedArtifacts.each
+			{
+				sh "mkdir -p ${it.value}"
+				sh "cp -a ../../${it.key} ${it.value}/"
+			}
+
+			// Fingerprint artifacts
+			fingerprint "**"
+		}
+
+		// Create tarball
+		sh "tar -cvf ${archive} -C tmp ."
+		
+		// Fingerprint tarball
+		fingerprint archive
+
+		// Upload tarball to jenkins
+		archiveArtifacts artifacts: archive
+
+		// Stash tarball for deployment to test server
+		stash includes: archive, name: 'archive'
+	}
 }
