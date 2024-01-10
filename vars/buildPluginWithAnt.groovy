@@ -3,7 +3,7 @@
 /**
  * Download artefact dependenciess to the build
  */
-def call(String plugin, String dependencies, String artifacts, Map<String, String> mappedArtifacts = [])
+def call(String plugin, String dependencies, String artifacts, Set<Map<String, String>> mappedArtifacts = [])
 {
 	// Using manual checkout to skip when not needed
 	checkout scm
@@ -33,8 +33,8 @@ def call(String plugin, String dependencies, String artifacts, Map<String, Strin
 			// Copy artifacts into subdirectories
 			mappedArtifacts.each
 			{
-				sh "mkdir -p ${it.value}"
-				sh "cp -a ../../${it.key} ${it.value}/"
+				sh "mkdir -p ${it.dest}"
+				sh "cp -a ../../${it.src} ${it.dest}/"
 			}
 
 			// Fingerprint artifacts
