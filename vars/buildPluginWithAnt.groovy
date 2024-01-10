@@ -3,7 +3,7 @@
 /**
  * Download artefact dependenciess to the build
  */
-def call(String plugin, String dependencies, String artifacts, Set<Map<String, String>> mappedArtifacts = [])
+def call(String plugin, String dependencies, String artifacts, ArrayList<Map<String, String>> mappedArtifacts = [])
 {
 	// Using manual checkout to skip when not needed
 	checkout scm
