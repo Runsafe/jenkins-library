@@ -11,8 +11,8 @@ String call(String plugins)
 	dir('plugins')
 	{
 		// Download the framework
-		copyArtifacts(projectName: '/Runsafe/Framework/master', filter:'framework.tar', optional: false)
-		sh 'tar -xvf framework.tar'
+		copyArtifacts(projectName: '/Runsafe/Framework/master', filter:'Framework.tar', optional: false)
+		sh 'tar -xvf Framework.tar'
 		refs.add('-Drunsafe.dir=plugins/runsafe')
 		refs.add('-Dlib.dir=plugins/runsafe')
 		if (plugins)
