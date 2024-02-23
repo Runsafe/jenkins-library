@@ -10,8 +10,14 @@ String call(String plugins)
 	sh 'rm -rf plugins'
 	dir('plugins')
 	{
+		target=env.BRANCH_NAME
+		if (env.TARGET_BRANCH)
+		{
+			target=env.TARGET_BRANCH
+		}
+
 		// Download the framework
-		copyArtifacts(projectName: '/Runsafe/Framework/master', filter:'Framework.tar', optional: false)
+		copyArtifacts(projectName: "/Runsafe/Framework/${target}", filter:'Framework.tar', optional: false)
 		sh 'tar -xvf Framework.tar'
 		refs.add('-Drunsafe.dir=plugins/runsafe')
 		refs.add('-Dlib.dir=plugins/runsafe')
@@ -20,7 +26,7 @@ String call(String plugins)
 			plugins.split(',').each
 			{
 				// Download the plugin
-				copyArtifacts(projectName: "/Runsafe/${it}/master", filter:"${it}.tar", optional: false)
+				copyArtifacts(projectName: "/Runsafe/${it}/${target}", filter:"${it}.tar", optional: false)
 				sh "tar -xvf ${it}.tar"
 				refs.add("-D${it}.dir=plugins")
 			}
