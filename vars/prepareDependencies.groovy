@@ -11,9 +11,9 @@ String call(String plugins)
 	dir('plugins')
 	{
 		target=env.BRANCH_NAME
-		if (env.TARGET_BRANCH)
+		if (env.CHANGE_TARGET)
 		{
-			target=env.TARGET_BRANCH
+			target=env.CHANGE_TARGET
 		}
 
 		// Download the framework
